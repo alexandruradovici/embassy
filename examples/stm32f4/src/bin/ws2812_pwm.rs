@@ -81,10 +81,10 @@ async fn main(_spawner: Spawner) {
 
     let color_list = &[&turn_off, &dim_white];
 
-    let pwm_channel = Channel::Ch1;
+    let PWM_SLICEannel = Channel::Ch1;
 
     // make sure PWM output keep low on first start
-    ws2812_pwm.set_duty(pwm_channel, 0);
+    ws2812_pwm.set_duty(PWM_SLICEannel, 0);
 
     // flip color at 2 Hz
     let mut ticker = Ticker::every(Duration::from_millis(500));
@@ -92,7 +92,7 @@ async fn main(_spawner: Spawner) {
     loop {
         for &color in color_list {
             // with &mut, we can easily reuse same DMA channel multiple times
-            ws2812_pwm.waveform_up(&mut dp.DMA1_CH2, pwm_channel, color).await;
+            ws2812_pwm.waveform_up(&mut dp.DMA1_CH2, PWM_SLICEannel, color).await;
             // ws2812 need at least 50 us low level input to confirm the input data and change it's state
             Timer::after_micros(50).await;
             // wait until ticker tick
